@@ -16,7 +16,8 @@ jobs:
             curl -fsSl https://deb.nodesource.com/setup_16.x | sudo -E bash -
             sudo apt-get install -y nodejs
             node -v
-            npm -v
+            npm install -g npm@10.5.2
+
             docker build -t udagram-api-feed ./udagram-api-feed
 
             docker build -t udagram-api-user ./udagram-api-user
