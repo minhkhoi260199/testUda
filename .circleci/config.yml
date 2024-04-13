@@ -9,34 +9,23 @@ jobs:
   build-docker:
     machine: true
     steps:
-      - checkout
-      - run:
+     - checkout
+     - run:
           name: Build docker container for each microservices
           command: |
-            echo "--------- Installing dependencies-----------"
-            sudo curl -LO https://nodejs.org/dist/v18.0.0/node-v18.0.0-linux-x64.tar.xz
-            sudo tar -xvf node-v18.0.0-linux-x64.tar.xz
-            sudo cp -r node-v18.0.0-linux-x64/{bin,include,lib,share} /usr/
-            node --version => v18.0.0
-            sudo apt install nodejs
-
-            echo "--------- The images is Building ------------"
-
+            curl -fsSl https://deb.nodesource.com/setup_16.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+            node -v
+            npm -v
             docker build -t udagram-api-feed ./udagram-api-feed
-            docker tag udagram-api-feed newthingade/udagram-api-feed:v3
 
             docker build -t udagram-api-user ./udagram-api-user
-            docker tag udagram-api-user newthingade/udagram-api-user:v3
-            
+
             docker build -t udagram-frontend ./udagram-frontend
-            docker tag udagram-frontend newthingade/udagram-frontend:v3
 
             docker build -t udagram-reverseproxy ./udagram-reverseproxy
-            docker tag udagram-reverseproxy newthingade/udagram-reverseproxy:v3
 
-            echo "-------- All images succesfully built----------"
-
-            echo " ------- login in to hub--------"
+            echo "--------- The images is Building ------------"
 
 
 workflows:
